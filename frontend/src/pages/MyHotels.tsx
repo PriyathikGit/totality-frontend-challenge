@@ -26,12 +26,12 @@ const MyHotels = () => {
           Add Hotels
         </Link>
       </span>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-5">
         {hotelData.map((hotel) => (
           <div className="flex flex-col justify-between border border-slate-300 rounded-lg p-8 gap-5">
             <h2 className="text-2xl font-bold">{hotel.name}</h2>
             <h2 className="whitespace-pre-line">{hotel.description}</h2>
-            <div className="flex flex-row gap-2 justify-between ">
+            <div className="flex flex-col gap-2 justify-between">
               <div className="border border-slate-300 rounded-md p-3 flex items-center">
                 <BsMap className="mr-1" />
                 {hotel.city},{hotel.country}
@@ -54,7 +54,7 @@ const MyHotels = () => {
             </div>
             <span className="flex justify-end">
               <Link
-                to={`/edit-hotel${hotel._id}`}
+                to={`/edit-hotel/${hotel._id}`}
                 className=" flex bg-blue-600 text-xl font-bold text-white p-2 hover:bg-blue-400 "
               >
                 View Details
