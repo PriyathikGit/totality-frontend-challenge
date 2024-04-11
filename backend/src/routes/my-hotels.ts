@@ -34,11 +34,11 @@ router.post(
     body('pricePerNight')
       .notEmpty()
       .isNumeric()
-      .withMessage('price per night is required and must be a number'),
+      .withMessage('Price per night is required and must be a number'),
     body('facilities')
       .notEmpty()
       .isArray()
-      .withMessage('Facilites are required'),
+      .withMessage('Facilities are required'),
   ],
   upload.array('imageFiles', 6),
   async (req: Request, res: Response) => {
@@ -46,23 +46,19 @@ router.post(
       const imageFiles = req.files as Express.Multer.File[];
       const newHotel: HotelType = req.body;
 
-      // 1. upload images to cloudinary
-
-      //upload images asynchronously thats why waiting
       const imageUrls = await uploadImages(imageFiles);
+
       newHotel.imageUrls = imageUrls;
       newHotel.lastUpdated = new Date();
       newHotel.userId = req.userId;
 
-      //3. save the new hotel in our database
       const hotel = new Hotel(newHotel);
       await hotel.save();
 
-      //4. return a 201 status
       res.status(201).send(hotel);
-    } catch (error) {
-      console.log('Error creating hotel: ', error);
-      res.status(500).json({ message: 'something went wrong' });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ message: 'Something went wrong' });
     }
   }
 );
