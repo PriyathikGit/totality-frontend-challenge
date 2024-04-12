@@ -55,6 +55,17 @@ router.get('/search', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    // finding the last updated hotel
+    const hotels = await Hotel.find().sort('-lastUpdated');
+    res.json(hotels);
+  } catch (error) {
+    console.log('error', error);
+    res.status(500).json({ message: 'Error fetching hotels' });
+  }
+});
+
 router.get(
   '/:id',
   [param('id').notEmpty().withMessage('Hotel id is required')],
@@ -73,16 +84,6 @@ router.get(
     }
   }
 );
-
-router.get('/', async (req: Request, res: Response) => {
-  try {
-    const hotels = await Hotel.find().sort('-lastUpdated');
-    res.json(hotels);
-  } catch (error) {
-    console.log('error', error);
-    res.status(500).json({ message: 'Error fetching hotels' });
-  }
-});
 
 router.post(
   '/:hotelId/bookings/payment-intent',
