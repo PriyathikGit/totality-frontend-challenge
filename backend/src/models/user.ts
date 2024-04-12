@@ -1,13 +1,8 @@
 // this user model represent user document and mongo database
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-export type userType={
-    _id: string;
-    email: string;
-    password: string;
-    firstName:string;
-    lastName:string;
-};
+import { userType } from '../shared/Types';
+
 
 const userSchema =  new mongoose.Schema({
     email : {type:String, required: true,unique:true},
